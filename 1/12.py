@@ -12,6 +12,5 @@ for i in range(3, len(lines)-1):
         count = count + 1
 
     prev_sum = new_sum
-    new_sum = 0
 
 print(count)
