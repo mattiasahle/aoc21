@@ -10,10 +10,8 @@ for i in range(len(lines)):
 
     if 'down' in lines[i]:
         aim = aim + value[0]
-        # depth = depth + value[0]
     if 'up' in lines[i]:
         aim = aim - value[0]
-        # depth = depth - value[0]
     if 'forward' in lines[i]:
         horizontal = horizontal + value[0]
         depth = depth + aim * value[0]

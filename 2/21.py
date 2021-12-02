@@ -16,4 +16,6 @@ for i in range(len(lines)):
     if 'up' in lines[i]:
         depth = depth - value[0]
 
+print(horizontal)
+print(depth)
 print(horizontal * depth)
