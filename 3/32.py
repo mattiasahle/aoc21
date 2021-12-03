@@ -1,96 +1,57 @@
 with open("input.txt", "r") as f:
     input = f.readlines()
 
-def count_bits(lines):
-    zeros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ones = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+oxygen = input.copy()
+co2 = input.copy()
 
-    for line in lines:
-        for i in range(len(line)):
-            if line[i] == "0":
-                zeros[i] = zeros[i] + 1
-            if line[i] == "1":
-                ones[i] = ones[i] + 1
+
+def count_bits(numbers, bit):
+    zeros = 0
+    ones = 0
+
+    for number in numbers:
+        if number[bit] == "0":
+            zeros = zeros + 1
+        if number[bit] == "1":
+            ones = ones + 1
 
     return zeros, ones
 
 
-oxygen = input
-zeros, ones = count_bits(oxygen)
+def remove_numbers(numbers, value, bit):
+    finished = False
 
-while len(oxygen) > 1:
-    for i in range(len(zeros)):
-        zeros, ones = count_bits(oxygen)
+    while not finished:
+        finished = True
 
-        if len(oxygen) == 1:
-            break
-
-        # print(oxygen)
-        # print(zeros[i])
-        # print(ones[i])
-        # print('bit pos: ', i)
-
-        finished = False
-
-        while not finished:
-            finished = True
-
-            for line in oxygen:
-                if len(oxygen) == 1:
-                    break
-                if zeros[i] > ones[i] and line[i] == '1':
-                    print('removed', line)
-                    oxygen.remove(line)
-                    finished = False
-                elif zeros[i] < ones[i] and line[i] == '0':
-                    print('removed', line)
-                    oxygen.remove(line)
-                    finished = False
-                elif zeros[i] == ones[i] and line[i] == '0':
-                    print('removed', line)
-                    oxygen.remove(line)
-                    finished = False
-
-print(oxygen)
+        for number in numbers:
+            if number[bit] == value:
+                numbers.remove(number)
+                finished = False
 
 
-co2 = input
-zeros, ones = count_bits(co2)
+for bit in range(12):
+    if len(oxygen) > 1:
+        zeros, ones = count_bits(oxygen, bit)
 
-while len(co2) > 1:
-    for i in range(len(zeros)):
-        zeros, ones = count_bits(co2)
+        if zeros > ones:
+            remove_numbers(oxygen, "1", bit)
+        elif zeros < ones:
+            remove_numbers(oxygen, "0", bit)
+        elif zeros == ones:
+            remove_numbers(oxygen, "0", bit)
 
-        if len(co2) == 1:
-            break
 
-        # print(co2)
-        # print(zeros[i])
-        # print(ones[i])
-        # print('bit pos: ', i)
+for bit in range(12):
+    if len(co2) > 1:
+        zeros, ones = count_bits(co2, bit)
 
-        finished = False
-
-        while not finished:
-            finished = True
-
-            for line in co2:
-                if len(co2) == 1:
-                    break
-                if zeros[i] > ones[i] and line[i] == '0':
-                    print('removed', line)
-                    co2.remove(line)
-                    finished = False
-                elif zeros[i] < ones[i] and line[i] == '1':
-                    print('removed', line)
-                    co2.remove(line)
-                    finished = False
-                elif zeros[i] == ones[i] and line[i] == '1':
-                    print('removed', line)
-                    co2.remove(line)
-                    finished = False
-
-print(co2)
+        if zeros > ones:
+            remove_numbers(co2, "0", bit)
+        elif zeros < ones:
+            remove_numbers(co2, "1", bit)
+        elif zeros == ones:
+            remove_numbers(co2, "1", bit)
 
 
 print(int(oxygen[-1], 2) * int(co2[-1], 2))
