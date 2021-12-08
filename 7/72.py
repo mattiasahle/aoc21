@@ -1,7 +1,4 @@
 # Read input
-from typing import Counter
-
-
 with open("input.txt", "r") as f:
     l = f.readline()
 
