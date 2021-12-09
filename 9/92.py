@@ -18,7 +18,9 @@ def get_bearings(r, c):
     return [r - 1, c], [r + 1, c], [r, c + 1], [r, c - 1] 
 
 
-def check_low_point(N, S, E, W, number, temp_list):
+def check_low_point(N, S, E, W, number):
+    temp_list = []
+
     if N[0] >= 0: temp_list.append(locations[N[0]][N[1]])
     if S[0] < len(locations): temp_list.append(locations[S[0]][S[1]])
     if E[1] < len(locations[r]): temp_list.append(locations[E[0]][E[1]])
@@ -89,12 +91,11 @@ basins = []
 
 for r in range(len(locations)):
     for c in range(len(locations[r])):
-        temp_list = []
         value = locations[r][c]
 
         if value != '.' and value != 9:
             N, S, E, W = get_bearings(r, c)
-            is_low_point = check_low_point(N, S, E, W, value, temp_list)
+            is_low_point = check_low_point(N, S, E, W, value)
 
             if is_low_point:
                 locations[r][c] = ' '
