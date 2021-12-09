@@ -9,25 +9,25 @@ locations = [list(map(int, [c for c in line])) for line in l]
 
 
 # Main
-risk_levels = 0
+risk_levels_sum = 0
 
-# for i in range(len(locations[0:1])):
-#     for j in range(len(locations[i][0:1])):
-#         temp_list = []
-#         if i == 0 and j == 0:
-#             temp_list.append(locations[i + 1][j])
-#             temp_list.append(locations[i][j - 1])
-#         print(temp_list)
+for row in range(len(locations)):
+    for column in range(len(locations[row])):
+        temp_list = []
+        number = locations[row][column]
 
-i = 0
-j = 0
-temp_list = []
+        N = [row - 1, column]
+        S = [row + 1, column]
+        E = [row, column + 1]
+        W = [row, column - 1]
 
-n = 
-s = 
-e = 
-w = 
+        if N[0] >= 0: temp_list.append(locations[N[0]][N[1]])
+        if S[0] < len(locations): temp_list.append(locations[S[0]][S[1]])
+        if E[1] < len(locations[row]): temp_list.append(locations[E[0]][E[1]])
+        if W[1] >= 0: temp_list.append(locations[W[0]][W[1]])
 
-if i == 0 and j == 0:
-    temp_list.append(locations[i + 1][j])
-    temp_list.append(locations[i][j + 1])
+        if number < min(temp_list):
+            risk_levels_sum = risk_levels_sum + number + 1
+
+
+print(risk_levels_sum)
