@@ -3,6 +3,9 @@
 # c = column
 
 import math
+import os
+import sys
+import time
 
 # Read input
 with open("input.txt", "r") as f:
@@ -14,6 +17,16 @@ locations = [list(map(int, [c for c in line])) for line in l]
 
 
 # Functions
+def print_map():
+    sys.stdout.flush()
+    for i in locations:
+        for j in i:
+            print(j, end='')
+        print()
+    time.sleep(0.1)
+    os.system('clear')
+
+
 def get_bearings(r, c):
     return [r - 1, c], [r + 1, c], [r, c + 1], [r, c - 1] 
 
@@ -32,6 +45,7 @@ def check_low_point(N, S, E, W, number):
 def check_north(r, c):
     if r >= 0 and locations[r][c] != 9 and locations[r][c] != '.' and locations[r][c] != ' ':
         locations[r][c] = '.'
+        print_map()
         basin_sum = 1 + check_north(r - 1, c)
         basin_sum = basin_sum + check_east(r, c + 1)
         basin_sum = basin_sum + check_west(r, c - 1)
@@ -43,6 +57,7 @@ def check_north(r, c):
 def check_south(r, c):
     if r < len(locations) and locations[r][c] != 9 and locations[r][c] != '.' and locations[r][c] != ' ':
         locations[r][c] = '.'
+        print_map()
         basin_sum = 1 + check_south(r + 1, c)
         basin_sum = basin_sum + check_east(r, c + 1)
         basin_sum = basin_sum + check_west(r, c - 1)
@@ -54,6 +69,7 @@ def check_south(r, c):
 def check_east(r, c):
     if c < len(locations[r]) and locations[r][c] != 9 and locations[r][c] != '.' and locations[r][c] != ' ':
         locations[r][c] = '.'
+        print_map()
         basin_sum = 1 + check_east(r, c + 1)
         basin_sum = basin_sum + check_north(r - 1, c)
         basin_sum = basin_sum + check_south(r + 1, c)
@@ -65,6 +81,7 @@ def check_east(r, c):
 def check_west(r, c):
     if c >= 0 and locations[r][c] != 9 and locations[r][c] != '.' and locations[r][c] != ' ':
         locations[r][c] = '.'
+        print_map()
         basin_sum = 1 + check_west(r, c - 1)
         basin_sum = basin_sum + check_north(r - 1, c)
         basin_sum = basin_sum + check_south(r + 1, c)
@@ -99,6 +116,7 @@ for r in range(len(locations)):
 
             if is_low_point:
                 locations[r][c] = ' '
+                print_map()
                 basin = 1 + check_north(N[0], N[1])
                 basin = basin + check_south(S[0], S[1])
                 basin = basin + check_east(E[0], E[1])
@@ -108,8 +126,4 @@ for r in range(len(locations)):
 
 # print(basins)
 # print(math.prod(basins))
-
-for i in locations:
-    for j in i:
-        print(j, end='')
-    print()
+print_map()
